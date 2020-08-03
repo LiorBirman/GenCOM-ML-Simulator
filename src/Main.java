@@ -6,6 +6,8 @@ public class Main
 {	
 	public static void main (String args[]) throws Exception
 	{	
+		// COMMIT TEST
+		
 		UI theView = new UI();
 		SimulatorManager theModel = SimulatorManager.GetInstance();
 		
