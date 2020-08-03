@@ -1,0 +1,11 @@
+TxEllipseRelation = TxMajor / TxMinor		; Test: Divide
+MsrEllipseRelation = MsrMajor / MsrMinor
+Two = 2.0					; Test: Constant
+Half = 0.5
+AngleSqr = TxAngle ^ Two			; Test: Sqare
+AngleSqrt = TxAngle ^ Half			; Test: Sqrt
+Temp1 = MsrEllipseRelation * Two		; Test: Multiply
+Temp2 = Two + Half				; Test: Plus
+Temp3 = Half - Two				; Test: Minus
+Temp4 = Temp1 + AngleSqrt			; Test: Multiply
+Temp5 = Temp6 + Temp1
