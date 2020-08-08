@@ -22,27 +22,3 @@ public class Main
 		}
 	}
 }
-
-
-//public class Main
-//{	
-//	public static void main (String args[]) throws Exception
-//	{	
-//		//TODO add text field for each correct meas
-//		UI theView = new UI();
-//		
-//		try
-//		{
-//			UIControler theControler = new UIControler(theView);
-//			theControler.OnLoadConfig();
-//			theView.SetWindowToVisible();
-//			
-//		}
-//		catch (Exception e)
-//		{
-//			System.out.println(e.getMessage());
-//		}
-//	}
-//}
-
-	
