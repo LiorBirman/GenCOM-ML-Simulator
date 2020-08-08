@@ -6,6 +6,7 @@ public class Main
 {	
 	public static void main (String args[]) throws Exception
 {			
+		// Test TEST EST
 		UI theView = new UI();
 		SimulatorManager theModel = SimulatorManager.GetInstance();
 		
