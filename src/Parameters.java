@@ -24,6 +24,8 @@ public class Parameters
 	private double m_Uncertainty3;
 	private double m_Step;
 	private double m_Range;
+	private double m_MaxBias;
+	private double m_BiasStep;
 	private int m_NLines;
 	private int m_N0CorrectMeas;
 	private int m_N1CorrectMeas;
@@ -46,6 +48,10 @@ public class Parameters
 		this.m_Uncertainty1 = Double.parseDouble((map.get("s1Uncertaninty")));
 		this.m_Uncertainty2 = Double.parseDouble((map.get("s2Uncertaninty")));
 		this.m_Uncertainty3 = Double.parseDouble((map.get("s3Uncertaninty")));
+		
+		this.m_MaxBias = Double.parseDouble((map.get("MaxBias")));
+		this.m_BiasStep = Double.parseDouble((map.get("BiasStep")));
+		
 		this.m_Range = Double.parseDouble((map.get("Range")));
 		this.m_NLines = (int)Double.parseDouble((map.get("NLines")));
 		this.m_Step = this.m_Range / this.m_NLines;
@@ -98,6 +104,8 @@ public class Parameters
 		
 		return m_Uncertainty3;
 	}
+	public double GetMaxBias() {return m_MaxBias;}
+	public double GetBiasStep() {return m_BiasStep;}
 	
 	// Setters
 	public void SetRange(int Range) {this.m_Range = Range;}
@@ -115,4 +123,6 @@ public class Parameters
 	public void SetUncertainty1(double Uncertainty) {this.m_Uncertainty1 = Uncertainty;}
 	public void SetUncertainty2(double Uncertainty) {this.m_Uncertainty2 = Uncertainty;}
 	public void SetUncertainty3(double Uncertainty) {this.m_Uncertainty3 = Uncertainty;}
+	public void SetMaxBias(double MaxBias) {this.m_MaxBias = MaxBias;}
+	public void SetBiasStep(double BiasStep) {this.m_BiasStep = BiasStep;}
 }

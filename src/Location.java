@@ -1,7 +1,7 @@
 
 public class Location extends Point
 {
-	static final int NUM_OF_DF = 3; // Sensors set always has 3 sensors
+	static final int NUM_OF_DFs = 3; // Sensors set always has 3 sensors
 	
 	// Data Members
 	protected DF m_DF[];
@@ -14,8 +14,8 @@ public class Location extends Point
 		super(); // Point = (0, 0)
 		this.m_Cut = new Cut();
 		this.m_Ellipse = new Ellipse(0, 0, 0);
-		this.m_DF = new DF[NUM_OF_DF];		
-		for (int i = 0 ; i < 3 ; i++)
+		this.m_DF = new DF[NUM_OF_DFs];		
+		for (int i = 0 ; i < NUM_OF_DFs ; i++)
 		{
 			m_DF[i] = new DF(0.0, 0, "", 0.0);
 		}
@@ -47,6 +47,10 @@ public class Location extends Point
 		m_DF[i].GetSensor().SetSensorID(SensorID);
 		m_DF[i].GetSensor().SetName(SensorName);
 		m_DF[i].GetSensor().SetUncertainty(SensorUncertainty);
+	}
+	public void SetDFRef(int i, DF df)
+	{
+		this.m_DF[i] = df;
 	}
 }
 

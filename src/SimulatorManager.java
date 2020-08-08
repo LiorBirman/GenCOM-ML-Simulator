@@ -155,7 +155,7 @@ public class SimulatorManager
 		System.out.println("\n");
 		this.CloseFiles(FilesHandler);
     }
-   	public void InitParams(Map<String, String> map)
+   	public void InitParams(Map<String, String> map)a
 	{
 		m_Params.SetParams(map);
 		

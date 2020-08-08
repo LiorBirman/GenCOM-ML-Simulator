@@ -11,7 +11,7 @@ public class Transmitter extends Location
 	{
 		super();
 	}
-
+	
 	// Getters
 	public double GetLocAngleRange() {return m_LocAngleRange;}
 	public double GetLocDistance() {return m_LocDistance;}

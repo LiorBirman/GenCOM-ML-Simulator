@@ -6,6 +6,7 @@ public class DF
 	private boolean m_AttachedToTx;
 	private double m_SensorDist;
 	private double m_Azimuth;
+	private double m_Bias;
 	private Sensor m_Sensor;
 
 	// Constructor
@@ -15,11 +16,13 @@ public class DF
 		this.m_Azimuth = Azimuth;
 		this.m_Use = false;
 		this.m_SensorDist = 0;
+		this.m_Bias = 0;
 	}
 
 	// Getters
 	public double GetAzimuth() {return m_Azimuth;}
 	public double GetSensorDist() {return m_SensorDist;}
+	public double GetBias() {return m_Bias;}
 	public Sensor GetSensor() {return m_Sensor;}
 	public boolean GetUse() {return this.m_Use;}
 	public boolean GetAttachedToTx() {return this.m_AttachedToTx;}
@@ -29,4 +32,5 @@ public class DF
 	public void SetAzimuth(double Azimuth) {this.m_Azimuth = Azimuth;}	
 	public void SetUse(boolean Use) {this.m_Use = Use;}
 	public void SetAttachedToTx(boolean AttachedToTx) {this.m_AttachedToTx = AttachedToTx;}
+	public void SetBias(double Bias) {this.m_Bias = Bias;}
 }
