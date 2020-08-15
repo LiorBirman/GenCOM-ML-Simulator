@@ -120,7 +120,7 @@ public class UIController {
 	
 	
 	
-	//	#### Start of Inner classes - Actions paired with the UI Controller ####
+	//	#### Start of Inner classes - Actions paired with the UI Controller #### \\
 	class GenerateListner implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
@@ -279,6 +279,6 @@ public class UIController {
 		}
 	}
 	
-	//	#### End of Inner classes - Actions paired with the UI Controller ####
+	//	#### End of Inner classes - Actions paired with the UI Controller #### \\
 
 }

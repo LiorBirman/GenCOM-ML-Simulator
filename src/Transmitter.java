@@ -2,8 +2,6 @@
 public class Transmitter extends Location
 {
 	// Data Members
-	private double m_LocAngleRange;
-	private double m_LocDistance;
 	private int m_ID = 0;
 
 	// Constructor

@@ -8,6 +8,9 @@ public class Location extends Point
 	public Cut m_Cut;
 	protected Ellipse m_Ellipse;
 	
+	protected double m_LocAngleRange;
+	protected double m_LocDistance;
+
 	// Constructor
 	public Location()
 	{
@@ -19,6 +22,12 @@ public class Location extends Point
 		{
 			m_DF[i] = new DF(0.0, 0, "", 0.0);
 		}
+	}
+	
+	// Private Functions
+	private double CalcPythagoras(double a, double b)
+	{
+		return Math.pow((Math.pow(a, 2) + Math.pow(b, 2)), 0.5);
 	}
 	
 	// Getters
@@ -37,6 +46,31 @@ public class Location extends Point
 		return p;
 	}
 
+	// Distance Between Tx / Msr To Sensor
+	public double GetS1LocDist() {return CalcPythagoras(this.GetDF(0).GetSensor().GetX() - this.GetX(), this.GetDF(0).GetSensor().GetY() - this.GetY());}
+	public double GetS2LocDist() {return CalcPythagoras(this.GetDF(1).GetSensor().GetX() - this.GetX(), this.GetDF(1).GetSensor().GetY() - this.GetY());}
+	public double GetS3LocDist() {return CalcPythagoras(this.GetDF(2).GetSensor().GetX() - this.GetX(), this.GetDF(2).GetSensor().GetY() - this.GetY());}
+
+	// Distance Between Two Sensors
+	public double GetS1S2Dist() {return CalcPythagoras(this.GetDF(0).GetSensor().GetX() - this.GetDF(1).GetSensor().GetX(), this.GetDF(0).GetSensor().GetY() - this.GetDF(1).GetSensor().GetY());}
+	public double GetS1S3Dist() {return CalcPythagoras(this.GetDF(0).GetSensor().GetX() - this.GetDF(2).GetSensor().GetX(), this.GetDF(0).GetSensor().GetY() - this.GetDF(2).GetSensor().GetY());}
+	public double GetS2S3Dist() {return CalcPythagoras(this.GetDF(1).GetSensor().GetX() - this.GetDF(2).GetSensor().GetX(), this.GetDF(1).GetSensor().GetY() - this.GetDF(2).GetSensor().GetY());}
+
+	// Distance Between Center Of Sensors To Sensor
+	public double GetS1AvgDist() {return CalcPythagoras(this.GetAvgSensorsPos().GetX() - this.GetDF(0).GetSensor().GetX(), this.GetAvgSensorsPos().GetY() - this.GetDF(0).GetSensor().GetY());}
+	public double GetS2AvgDist() {return CalcPythagoras(this.GetAvgSensorsPos().GetX() - this.GetDF(1).GetSensor().GetX(), this.GetAvgSensorsPos().GetY() - this.GetDF(1).GetSensor().GetY());}
+	public double GetS3AvgDist() {return CalcPythagoras(this.GetAvgSensorsPos().GetX() - this.GetDF(2).GetSensor().GetX(), this.GetAvgSensorsPos().GetY() - this.GetDF(2).GetSensor().GetY());}
+
+	// Distance Between DF To Other Sensor
+//	public double GetS1DF2Dist()
+//	public double GetS1DF3Dist()
+//	public double GetS2DF1Dist()
+//	public double GetS2DF3Dist()
+//	public double GetS3DF1Dist()
+//	public double GetS3DF2Dist()
+
+	
+	
 	// Setters
 	public void SetX(double x) {this.m_X = x;}
 	public void SetY(double y) {this.m_Y = y;}

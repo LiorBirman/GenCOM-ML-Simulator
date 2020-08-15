@@ -20,10 +20,11 @@ public class CutServices {
 				LR_For_Cut.DF_For_Cut[i].Sensor.Sx = DFs[i].GetSensor().GetX();
 				LR_For_Cut.DF_For_Cut[i].Sensor.Sy = DFs[i].GetSensor().GetY();
 				LR_For_Cut.DF_For_Cut[i].Sensor.Sh = DFs[i].GetSensor().GetHeight();
-
+				LR_For_Cut.DF_For_Cut[i].Bias_Rad = DFs[i].GetBias() * Cut.DEGREE_TO_RADIAN;
+				
 				double sin_DF = Math.sin (LR_For_Cut.DF_For_Cut[i].DOA_Rad);
 				double cos_DF = Math.cos (LR_For_Cut.DF_For_Cut[i].DOA_Rad);
-
+				
 				LR_For_Cut.DF_For_Cut[i].a = cos_DF;
 				LR_For_Cut.DF_For_Cut[i].b = -sin_DF;
 
@@ -277,7 +278,9 @@ public class CutServices {
 					dx = LR_For_Cut.CutX - LR_For_Cut.DF_For_Cut[i].Sensor.Sx;
 					dy = LR_For_Cut.CutY - LR_For_Cut.DF_For_Cut[i].Sensor.Sy;
 
-					d = Cut.DF_NOISE_FOR_ELLIPSE_CALC * (dy * LR_For_Cut.DF_For_Cut[i].a - dx * LR_For_Cut.DF_For_Cut[i].b);
+					double DF_Noise_For_Ellipse = Math.sin(LR_For_Cut.DF_For_Cut[i].Bias_Rad / 2);
+					d = DF_Noise_For_Ellipse * (dy * LR_For_Cut.DF_For_Cut[i].a - dx * LR_For_Cut.DF_For_Cut[i].b);
+					// d = Cut.DF_NOISE_FOR_ELLIPSE_CALC * (dy * LR_For_Cut.DF_For_Cut[i].a - dx * LR_For_Cut.DF_For_Cut[i].b);
 					w = 1.0 / d;
 
 					LR_For_Cut.DF_For_Cut[i].w = w;

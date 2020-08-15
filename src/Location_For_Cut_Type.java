@@ -21,6 +21,7 @@ class DF_For_Cut_Type {
 	double		b;
 	double		c;
 	double		w;
+	double      Bias_Rad;
 	Sensor_Type	Sensor;
 	boolean		Use;
 	

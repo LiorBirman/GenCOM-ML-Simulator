@@ -5,8 +5,9 @@ public class TransmittersManager
 {
 	static final int NUM_OF_FILE_TYPES = 2;
 	static final int NUM_OF_DFs = 3;
-
-	// DataMembers
+	static final int NUM_OF_NODF_COMBINATIONS = 4;
+	
+	// Data Members
 	private Writable[] m_Writer;
 	
 	// Constructor
@@ -94,30 +95,78 @@ public class TransmittersManager
 			BaseDFs[i] = t.GetDF(i);
 		}
 		
+		// Save Base DFs Azimuth Value
+		double BaseAzimuth[] = new double[NUM_OF_DFs];
+		for (int i = 0 ; i < NUM_OF_DFs ; i++)
+		{
+			BaseAzimuth[i] = t.GetDF(i).GetAzimuth();
+		}
+		
 		// Repeat For All Possible Combinations Of DFs
 		while (BasicTxContinue)
 		{
 			// Sensors Combination
 			BasicTxContinue = this.AdjustSensorsCombination(SensorsCombinationIndex, t, BasicTxContinue, BaseDFs);
 			
-			// DF Calculation
-			t.m_Cut.perform_DF_Cut(t, t.m_Cut.LR_For_Cut);
-	
-			// Ellipse Calculation
-			t.m_Cut.perform_Ellipse_Calc(t);
-	
-			// DFs Angles Difference Calculation
-			t.SetLocAngleRange(t.m_Cut.perform_DFsAnglesDiff_Calc(t.GetDFSet()));
-			
-			// Transmitter To Sensor Distance Calculation
-			t.SetLocDistance(t.m_Cut.perform_Distance_Calc(t.GetX(), t.GetY(), t.GetAvgSensorsPos().GetX(), t.GetAvgSensorsPos().GetY()));
-			
-			m_Writer[0].WriteToFile(t, FilesHandler[2]);
-			m_Writer[1].WriteToFile(t, FilesHandler[6]);
-			
-			   // Flow Progression -> Next Filter \\
-			mm.MeasurementsManagement(t, params, FilesHandler, rt, id);
-			
+			for (double DF1Bias = params.GetMaxBias() * -1 ; DF1Bias < params.GetMaxBias() ; DF1Bias += params.GetBiasStep())
+			{
+				t.GetDF(0).SetBias(DF1Bias);
+				t.GetDF(0).SetAzimuth(BaseAzimuth[0] + DF1Bias);
+				
+				for (double DF2Bias = params.GetMaxBias() * -1 ; DF2Bias < params.GetMaxBias() ; DF2Bias += params.GetBiasStep())
+				{
+					t.GetDF(1).SetBias(DF2Bias);
+					t.GetDF(1).SetAzimuth(BaseAzimuth[1] + DF2Bias);
+					
+					for (double DF3Bias = params.GetMaxBias() * -1 ; DF3Bias < params.GetMaxBias() ; DF3Bias += params.GetBiasStep())
+					{
+						t.GetDF(2).SetBias(DF3Bias);
+						t.GetDF(2).SetAzimuth(BaseAzimuth[2] + DF3Bias);
+						
+						for (int i = 0 ; i < NUM_OF_NODF_COMBINATIONS ; i++)
+						{
+							switch (i)
+							{
+							case 0: // True True True
+								break;
+							case 1: // False True True
+								t.GetDF(0).SetUse(false);
+								t.GetDF(1).SetUse(true);
+								t.GetDF(2).SetUse(true);
+								break;
+							case 2: // True False True
+								t.GetDF(0).SetUse(true);
+								t.GetDF(1).SetUse(false);
+								t.GetDF(2).SetUse(true);
+								break;
+							case 3: // True True False
+								t.GetDF(0).SetUse(true);
+								t.GetDF(1).SetUse(true);
+								t.GetDF(2).SetUse(false);
+								break;
+							}
+							
+							// DF Calculation
+							t.m_Cut.perform_DF_Cut(t, t.m_Cut.LR_For_Cut);
+					
+							// Ellipse Calculation
+							t.m_Cut.perform_Ellipse_Calc(t);
+					
+							// DFs Angles Difference Calculation
+							t.SetLocAngleRange(t.m_Cut.perform_DFsAnglesDiff_Calc(t.GetDFSet()));
+							
+							// Transmitter To Sensor Distance Calculation
+							t.SetLocDistance(t.m_Cut.perform_Distance_Calc(t.GetX(), t.GetY(), t.GetAvgSensorsPos().GetX(), t.GetAvgSensorsPos().GetY()));
+							
+							m_Writer[0].WriteToFile(t, FilesHandler[2]);
+							m_Writer[1].WriteToFile(t, FilesHandler[6]);
+							
+							   // Flow Progression -> Next Filter \\
+							mm.MeasurementsManagement(t, params, FilesHandler, rt, id);
+						}
+					}
+				}
+			}
 			SensorsCombinationIndex++;
 		}
 	}

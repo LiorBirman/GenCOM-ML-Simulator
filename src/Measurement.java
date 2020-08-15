@@ -10,8 +10,6 @@ public class Measurement extends Location
 	
 	// Data Members
 	private Location[] m_SubLocations; // For Future Use \\
-	private double m_LocAngleRange;
-	private double m_LocDistance;
 	private int m_ID = 0;
 	private boolean m_AttachedToTx;
 	
