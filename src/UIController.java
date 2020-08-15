@@ -70,8 +70,12 @@ public class UIController {
 			map.put("N3CorrectMeas", m_TheView.getTextField_N3CorrectMeas());
 			map.put("PathOutputFolder", m_TheView.getOutputPath());
 			map.put("PathRelationsFile", m_TheView.getRelationsFilePath());
+			map.put("MaxBias", m_TheView.getTextField_MaxBias());
+			map.put("BiasStep", m_TheView.getTextField_BiasStep());
+			map.put("MinBias", m_TheView.getTextField_MinBias());
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			m_TheView.AppendToLogTextArea(e.getMessage().toString());
 			m_TheView.AppendToLogTextArea(e.getStackTrace().toString());
 		}
@@ -97,6 +101,10 @@ public class UIController {
 		m_TheView.setTextField_N1CorrectMeas(m_configFile.getProperty("N1CorrectMeas").trim());
 		m_TheView.setTextField_N2CorrectMeas(m_configFile.getProperty("N2CorrectMeas").trim());
 		m_TheView.setTextField_N3CorrectMeas(m_configFile.getProperty("N3CorrectMeas").trim());
+		m_TheView.setTextField_MaxBias(m_configFile.getProperty("MaxBias").trim());
+		m_TheView.setTextField_MinBias(m_configFile.getProperty("MinBias").trim());
+		m_TheView.setTextField_BiasStep(m_configFile.getProperty("BiasStep").trim());
+		
 		String outputFolder = m_configFile.getProperty("PathOutputFolder");
 		outputFolder = outputFolder.length() > 2 ? outputFolder.substring(0, outputFolder.length() - 1) : outputFolder; 		// Chop unnecessary '\' from json string
 		m_TheView.setTextField_pathOutputFolder(outputFolder);
@@ -146,7 +154,9 @@ public class UIController {
 			m_configFile.setProperty("N3CorrectMeas", map.get("N3CorrectMeas"));
 			m_configFile.setProperty("PathOutputFolder", map.get("PathOutputFolder"));
 			m_configFile.setProperty("PathRelationsFile", map.get("PathRelationsFile"));
-
+			m_configFile.setProperty("MaxBias", map.get("MaxBias"));
+			m_configFile.setProperty("BiasStep", map.get("BiasStep"));
+			m_configFile.setProperty("MinBias", map.get("MinBias"));
 			m_configFile.WriteToConfigFile();
 		}
 		

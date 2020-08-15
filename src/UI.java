@@ -32,6 +32,11 @@ import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.CompoundBorder;
 
 public class UI extends JFrame{
 
@@ -45,7 +50,6 @@ public class UI extends JFrame{
 	private JTextField textField_s3x;
 	private JTextField textField_s3y;
 	private JTextField textField_s3Uncertainty;
-	private JTextArea textArea_output;
 	private JButton btn_LoadConfig;
 	private JButton btn_SaveToConfig;
 	private JButton btn_Generate;
@@ -66,6 +70,11 @@ public class UI extends JFrame{
 	private JTextField textField_GridStep;
 	private JTextField textField_NLines;
 	private JTextField textField_Range;
+	private JTextArea textArea_output;
+	private JTextField textField_MaxBias;
+	private JTextField textField_BiasStep;
+	private JTextField textField_MinBias;
+
 	
 	/**
 	 * Create the application.
@@ -85,9 +94,9 @@ public class UI extends JFrame{
 		frmGencommMl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 150, 150, 0, 150, 141, 0, 0, 121, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frmGencommMl.getContentPane().setLayout(gridBagLayout);
 		
 		Component verticalStrut_9 = Box.createVerticalStrut(20);
@@ -395,13 +404,69 @@ public class UI extends JFrame{
 		gbc_textField_s3Uncertainty.gridy = 9;
 		frmGencommMl.getContentPane().add(textField_s3Uncertainty, gbc_textField_s3Uncertainty);
 		
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
-		GridBagConstraints gbc_verticalStrut_3 = new GridBagConstraints();
-		gbc_verticalStrut_3.anchor = GridBagConstraints.WEST;
-		gbc_verticalStrut_3.insets = new Insets(0, 0, 5, 5);
-		gbc_verticalStrut_3.gridx = 3;
-		gbc_verticalStrut_3.gridy = 10;
-		frmGencommMl.getContentPane().add(verticalStrut_3, gbc_verticalStrut_3);
+		JLabel MaxBiasLbl = new JLabel("Max Bias:");
+		MaxBiasLbl.setFont(new Font("Dialog", Font.PLAIN, 12));
+		MaxBiasLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_MaxBiasLbl = new GridBagConstraints();
+		gbc_MaxBiasLbl.anchor = GridBagConstraints.WEST;
+		gbc_MaxBiasLbl.insets = new Insets(0, 0, 5, 5);
+		gbc_MaxBiasLbl.gridx = 3;
+		gbc_MaxBiasLbl.gridy = 10;
+		frmGencommMl.getContentPane().add(MaxBiasLbl, gbc_MaxBiasLbl);
+		
+		textField_MaxBias = new JTextField();
+		GridBagConstraints gbc_textField_MaxBias_1 = new GridBagConstraints();
+		gbc_textField_MaxBias_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_MaxBias_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_MaxBias_1.gridx = 4;
+		gbc_textField_MaxBias_1.gridy = 10;
+		frmGencommMl.getContentPane().add(textField_MaxBias, gbc_textField_MaxBias_1);
+		textField_MaxBias.setColumns(10);
+		
+		JLabel BiasStepLbl = new JLabel("Bias Step:");
+		BiasStepLbl.setFont(new Font("Dialog", Font.PLAIN, 12));
+		BiasStepLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_BiasStepLbl = new GridBagConstraints();
+		gbc_BiasStepLbl.insets = new Insets(0, 0, 5, 5);
+		gbc_BiasStepLbl.anchor = GridBagConstraints.WEST;
+		gbc_BiasStepLbl.gridx = 6;
+		gbc_BiasStepLbl.gridy = 10;
+		frmGencommMl.getContentPane().add(BiasStepLbl, gbc_BiasStepLbl);
+		
+		textField_BiasStep = new JTextField();
+		GridBagConstraints gbc_textField_BiasStep_2 = new GridBagConstraints();
+		gbc_textField_BiasStep_2.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_BiasStep_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_BiasStep_2.gridx = 7;
+		gbc_textField_BiasStep_2.gridy = 10;
+		frmGencommMl.getContentPane().add(textField_BiasStep, gbc_textField_BiasStep_2);
+		textField_BiasStep.setColumns(10);
+		
+		JLabel MinBiasLbl = new JLabel("Minimum Bias:");
+		MinBiasLbl.setFont(new Font("Dialog", Font.PLAIN, 12));
+		GridBagConstraints gbc_MinBiasLbl = new GridBagConstraints();
+		gbc_MinBiasLbl.anchor = GridBagConstraints.EAST;
+		gbc_MinBiasLbl.insets = new Insets(0, 0, 5, 5);
+		gbc_MinBiasLbl.gridx = 9;
+		gbc_MinBiasLbl.gridy = 10;
+		frmGencommMl.getContentPane().add(MinBiasLbl, gbc_MinBiasLbl);
+		
+		textField_MinBias = new JTextField();
+		GridBagConstraints gbc_textField_MinBias = new GridBagConstraints();
+		gbc_textField_MinBias.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_MinBias.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_MinBias.gridx = 10;
+		gbc_textField_MinBias.gridy = 10;
+		frmGencommMl.getContentPane().add(textField_MinBias, gbc_textField_MinBias);
+		textField_MinBias.setColumns(10);
+		
+		JLabel CommentMinBiasLbl = new JLabel("(For Min. Ellipse)");
+		CommentMinBiasLbl.setFont(new Font("Dialog", Font.PLAIN, 12));
+		GridBagConstraints gbc_CommentMinBiasLbl = new GridBagConstraints();
+		gbc_CommentMinBiasLbl.insets = new Insets(0, 0, 5, 5);
+		gbc_CommentMinBiasLbl.gridx = 11;
+		gbc_CommentMinBiasLbl.gridy = 10;
+		frmGencommMl.getContentPane().add(CommentMinBiasLbl, gbc_CommentMinBiasLbl);
 		
 		JLabel lblOutputFolder = new JLabel("Output Folder:");
 		lblOutputFolder.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -464,13 +529,13 @@ public class UI extends JFrame{
 		gbc_btn_SelectRelationsFile.gridy = 12;
 		frmGencommMl.getContentPane().add(btn_SelectRelationsFile, gbc_btn_SelectRelationsFile);
 		
-		JSeparator separator = new JSeparator();
-		GridBagConstraints gbc_separator = new GridBagConstraints();
-		gbc_separator.anchor = GridBagConstraints.WEST;
-		gbc_separator.insets = new Insets(0, 0, 5, 5);
-		gbc_separator.gridx = 3;
-		gbc_separator.gridy = 13;
-		frmGencommMl.getContentPane().add(separator, gbc_separator);
+		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut_3 = new GridBagConstraints();
+		gbc_verticalStrut_3.anchor = GridBagConstraints.WEST;
+		gbc_verticalStrut_3.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalStrut_3.gridx = 3;
+		gbc_verticalStrut_3.gridy = 13;
+		frmGencommMl.getContentPane().add(verticalStrut_3, gbc_verticalStrut_3);
 		
 		JLabel lblOutput = new JLabel("Log:");
 		lblOutput.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -478,15 +543,8 @@ public class UI extends JFrame{
 		gbc_lblOutput.anchor = GridBagConstraints.WEST;
 		gbc_lblOutput.insets = new Insets(0, 0, 5, 5);
 		gbc_lblOutput.gridx = 6;
-		gbc_lblOutput.gridy = 14;
+		gbc_lblOutput.gridy = 13;
 		frmGencommMl.getContentPane().add(lblOutput, gbc_lblOutput);
-		
-		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
-		GridBagConstraints gbc_horizontalStrut_3 = new GridBagConstraints();
-		gbc_horizontalStrut_3.insets = new Insets(0, 0, 5, 5);
-		gbc_horizontalStrut_3.gridx = 11;
-		gbc_horizontalStrut_3.gridy = 14;
-		frmGencommMl.getContentPane().add(horizontalStrut_3, gbc_horizontalStrut_3);
 		
 		JLabel label_15 = new JLabel("Range:");
 		label_15.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -495,7 +553,7 @@ public class UI extends JFrame{
 		gbc_label_15.insets = new Insets(0, 0, 5, 5);
 		gbc_label_15.anchor = GridBagConstraints.WEST;
 		gbc_label_15.gridx = 3;
-		gbc_label_15.gridy = 15;
+		gbc_label_15.gridy = 14;
 		frmGencommMl.getContentPane().add(label_15, gbc_label_15);
 		
 		textField_Range = new JTextField();
@@ -504,19 +562,21 @@ public class UI extends JFrame{
 		gbc_textField_Range.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_Range.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_Range.gridx = 4;
-		gbc_textField_Range.gridy = 15;
+		gbc_textField_Range.gridy = 14;
 		frmGencommMl.getContentPane().add(textField_Range, gbc_textField_Range);
 		
 		textArea_output = new JTextArea();
-		JScrollPane scrollPane = new JScrollPane(textArea_output);
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 7;
-		gbc_scrollPane.gridheight = 11;
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 6;
-		gbc_scrollPane.gridy = 15;
-		frmGencommMl.getContentPane().add(scrollPane, gbc_scrollPane);
+		textArea_output.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textArea_output.setFont(new Font("Dialog", Font.PLAIN, 12));
+		textArea_output.setEditable(false);
+		GridBagConstraints gbc_textArea_output = new GridBagConstraints();
+		gbc_textArea_output.gridheight = 10;
+		gbc_textArea_output.fill = GridBagConstraints.BOTH;
+		gbc_textArea_output.gridwidth = 5;
+		gbc_textArea_output.insets = new Insets(0, 0, 5, 5);
+		gbc_textArea_output.gridx = 6;
+		gbc_textArea_output.gridy = 14;
+		frmGencommMl.getContentPane().add(textArea_output, gbc_textArea_output);
 		
 		JLabel label_14 = new JLabel("N Lines:");
 		label_14.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -524,7 +584,7 @@ public class UI extends JFrame{
 		gbc_label_14.insets = new Insets(0, 0, 5, 5);
 		gbc_label_14.anchor = GridBagConstraints.WEST;
 		gbc_label_14.gridx = 3;
-		gbc_label_14.gridy = 16;
+		gbc_label_14.gridy = 15;
 		frmGencommMl.getContentPane().add(label_14, gbc_label_14);
 		
 		textField_NLines = new JTextField();
@@ -533,7 +593,7 @@ public class UI extends JFrame{
 		gbc_textField_NLines.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_NLines.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_NLines.gridx = 4;
-		gbc_textField_NLines.gridy = 16;
+		gbc_textField_NLines.gridy = 15;
 		frmGencommMl.getContentPane().add(textField_NLines, gbc_textField_NLines);
 		
 		JLabel label_13 = new JLabel("Grid Step:");
@@ -543,7 +603,7 @@ public class UI extends JFrame{
 		gbc_label_13.insets = new Insets(0, 0, 5, 5);
 		gbc_label_13.anchor = GridBagConstraints.WEST;
 		gbc_label_13.gridx = 3;
-		gbc_label_13.gridy = 17;
+		gbc_label_13.gridy = 16;
 		frmGencommMl.getContentPane().add(label_13, gbc_label_13);
 		
 		textField_GridStep = new JTextField();
@@ -552,7 +612,7 @@ public class UI extends JFrame{
 		gbc_textField_GridStep.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_GridStep.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_GridStep.gridx = 4;
-		gbc_textField_GridStep.gridy = 17;
+		gbc_textField_GridStep.gridy = 16;
 		frmGencommMl.getContentPane().add(textField_GridStep, gbc_textField_GridStep);
 		
 		JLabel label_12 = new JLabel("N0 Correct Meas:");
@@ -562,7 +622,7 @@ public class UI extends JFrame{
 		gbc_label_12.insets = new Insets(0, 0, 5, 5);
 		gbc_label_12.anchor = GridBagConstraints.WEST;
 		gbc_label_12.gridx = 3;
-		gbc_label_12.gridy = 18;
+		gbc_label_12.gridy = 17;
 		frmGencommMl.getContentPane().add(label_12, gbc_label_12);
 		
 		textField_N0CorrectMeas = new JTextField();
@@ -571,7 +631,7 @@ public class UI extends JFrame{
 		gbc_textField_N0CorrectMeas.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_N0CorrectMeas.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_N0CorrectMeas.gridx = 4;
-		gbc_textField_N0CorrectMeas.gridy = 18;
+		gbc_textField_N0CorrectMeas.gridy = 17;
 		frmGencommMl.getContentPane().add(textField_N0CorrectMeas, gbc_textField_N0CorrectMeas);
 		
 		JLabel label_11 = new JLabel("N1 Correct Meas:");
@@ -581,7 +641,7 @@ public class UI extends JFrame{
 		gbc_label_11.insets = new Insets(0, 0, 5, 5);
 		gbc_label_11.anchor = GridBagConstraints.WEST;
 		gbc_label_11.gridx = 3;
-		gbc_label_11.gridy = 19;
+		gbc_label_11.gridy = 18;
 		frmGencommMl.getContentPane().add(label_11, gbc_label_11);
 		
 		textField_N1CorrectMeas = new JTextField();
@@ -590,7 +650,7 @@ public class UI extends JFrame{
 		gbc_textField_N1CorrectMeas.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_N1CorrectMeas.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_N1CorrectMeas.gridx = 4;
-		gbc_textField_N1CorrectMeas.gridy = 19;
+		gbc_textField_N1CorrectMeas.gridy = 18;
 		frmGencommMl.getContentPane().add(textField_N1CorrectMeas, gbc_textField_N1CorrectMeas);
 		
 		JLabel label_10 = new JLabel("N2 Correct Meas:");
@@ -600,7 +660,7 @@ public class UI extends JFrame{
 		gbc_label_10.insets = new Insets(0, 0, 5, 5);
 		gbc_label_10.anchor = GridBagConstraints.WEST;
 		gbc_label_10.gridx = 3;
-		gbc_label_10.gridy = 20;
+		gbc_label_10.gridy = 19;
 		frmGencommMl.getContentPane().add(label_10, gbc_label_10);
 		
 		textField_N2CorrectMeas = new JTextField();
@@ -609,7 +669,7 @@ public class UI extends JFrame{
 		gbc_textField_N2CorrectMeas.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_N2CorrectMeas.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_N2CorrectMeas.gridx = 4;
-		gbc_textField_N2CorrectMeas.gridy = 20;
+		gbc_textField_N2CorrectMeas.gridy = 19;
 		frmGencommMl.getContentPane().add(textField_N2CorrectMeas, gbc_textField_N2CorrectMeas);
 		
 		JLabel label_9 = new JLabel("N3 Correct Meas:");
@@ -619,7 +679,7 @@ public class UI extends JFrame{
 		gbc_label_9.anchor = GridBagConstraints.WEST;
 		gbc_label_9.insets = new Insets(0, 0, 5, 5);
 		gbc_label_9.gridx = 3;
-		gbc_label_9.gridy = 21;
+		gbc_label_9.gridy = 20;
 		frmGencommMl.getContentPane().add(label_9, gbc_label_9);
 		
 		textField_N3CorrectMeas = new JTextField();
@@ -628,15 +688,23 @@ public class UI extends JFrame{
 		gbc_textField_N3CorrectMeas.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_N3CorrectMeas.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_N3CorrectMeas.gridx = 4;
-		gbc_textField_N3CorrectMeas.gridy = 21;
+		gbc_textField_N3CorrectMeas.gridy = 20;
 		frmGencommMl.getContentPane().add(textField_N3CorrectMeas, gbc_textField_N3CorrectMeas);
 		
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		GridBagConstraints gbc_verticalStrut_1 = new GridBagConstraints();
-		gbc_verticalStrut_1.insets = new Insets(0, 0, 5, 5);
-		gbc_verticalStrut_1.gridx = 3;
-		gbc_verticalStrut_1.gridy = 22;
-		frmGencommMl.getContentPane().add(verticalStrut_1, gbc_verticalStrut_1);
+		JSeparator separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.anchor = GridBagConstraints.WEST;
+		gbc_separator.insets = new Insets(0, 0, 5, 5);
+		gbc_separator.gridx = 3;
+		gbc_separator.gridy = 21;
+		frmGencommMl.getContentPane().add(separator, gbc_separator);
+		
+		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut_3 = new GridBagConstraints();
+		gbc_horizontalStrut_3.insets = new Insets(0, 0, 5, 5);
+		gbc_horizontalStrut_3.gridx = 11;
+		gbc_horizontalStrut_3.gridy = 22;
+		frmGencommMl.getContentPane().add(horizontalStrut_3, gbc_horizontalStrut_3);
 		
 		btn_SaveToConfig = new JButton("Save To Config");
 		btn_SaveToConfig.setFont(new Font("Tahoma", Font.PLAIN, 8));
@@ -645,7 +713,7 @@ public class UI extends JFrame{
 		gbc_btn_saveToConfig.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btn_saveToConfig.insets = new Insets(0, 0, 5, 5);
 		gbc_btn_saveToConfig.gridx = 3;
-		gbc_btn_saveToConfig.gridy = 24;
+		gbc_btn_saveToConfig.gridy = 23;
 		frmGencommMl.getContentPane().add(btn_SaveToConfig, gbc_btn_saveToConfig);
 		
 		btn_LoadConfig = new JButton("Load Config");
@@ -655,44 +723,48 @@ public class UI extends JFrame{
 		gbc_btn_loadConfig.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btn_loadConfig.insets = new Insets(0, 0, 5, 5);
 		gbc_btn_loadConfig.gridx = 4;
-		gbc_btn_loadConfig.gridy = 24;
+		gbc_btn_loadConfig.gridy = 23;
 		frmGencommMl.getContentPane().add(btn_LoadConfig, gbc_btn_loadConfig);
 		
 		Component horizontalStrut_5 = Box.createHorizontalStrut(20);
 		GridBagConstraints gbc_horizontalStrut_5 = new GridBagConstraints();
 		gbc_horizontalStrut_5.insets = new Insets(0, 0, 5, 5);
 		gbc_horizontalStrut_5.gridx = 0;
-		gbc_horizontalStrut_5.gridy = 25;
+		gbc_horizontalStrut_5.gridy = 24;
 		frmGencommMl.getContentPane().add(horizontalStrut_5, gbc_horizontalStrut_5);
 		
 		btn_Generate = new JButton("Generate");
+		btn_Generate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btn_Generate.setBackground(UIManager.getColor("Button.light"));
 		GridBagConstraints gbc_btnGenerate = new GridBagConstraints();
 		gbc_btnGenerate.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGenerate.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGenerate.gridx = 3;
-		gbc_btnGenerate.gridy = 26;
+		gbc_btnGenerate.gridy = 25;
 		frmGencommMl.getContentPane().add(btn_Generate, gbc_btnGenerate);
 		
 		Component verticalStrut_8 = Box.createVerticalStrut(20);
 		GridBagConstraints gbc_verticalStrut_8 = new GridBagConstraints();
 		gbc_verticalStrut_8.insets = new Insets(0, 0, 5, 5);
 		gbc_verticalStrut_8.gridx = 3;
-		gbc_verticalStrut_8.gridy = 27;
+		gbc_verticalStrut_8.gridy = 26;
 		frmGencommMl.getContentPane().add(verticalStrut_8, gbc_verticalStrut_8);
 		
 		Component verticalStrut_5 = Box.createVerticalStrut(20);
 		GridBagConstraints gbc_verticalStrut_5 = new GridBagConstraints();
 		gbc_verticalStrut_5.insets = new Insets(0, 0, 5, 5);
 		gbc_verticalStrut_5.gridx = 3;
-		gbc_verticalStrut_5.gridy = 28;
+		gbc_verticalStrut_5.gridy = 27;
 		frmGencommMl.getContentPane().add(verticalStrut_5, gbc_verticalStrut_5);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
 		gbc_verticalStrut.insets = new Insets(0, 0, 0, 5);
 		gbc_verticalStrut.gridx = 3;
-		gbc_verticalStrut.gridy = 29;
+		gbc_verticalStrut.gridy = 28;
 		frmGencommMl.getContentPane().add(verticalStrut, gbc_verticalStrut);
 	}
 	
@@ -735,6 +807,15 @@ public class UI extends JFrame{
 	public void setTextField_N3CorrectMeas(String textField_N3CorrectMeas) {
 		this.textField_N3CorrectMeas.setText(textField_N3CorrectMeas);
 	}
+	
+	public void setTextField_BiasStep(String textField_BiasStep) {
+		this.textField_BiasStep.setText(textField_BiasStep);
+	}
+
+	public void setTextField_MaxBias(String textField_MaxBias) {
+		this.textField_MaxBias.setText(textField_MaxBias);
+	}
+
 
 	public String getTextField_N0CorrectMeas() {
 		return textField_N0CorrectMeas.getText();
@@ -743,7 +824,19 @@ public class UI extends JFrame{
 	public void setTextField_N0CorrectMeas(String textField_N0CorrectMeas) {
 		this.textField_N0CorrectMeas.setText(textField_N0CorrectMeas);
 	}
+	
+	public String getTextField_BiasStep() {
+		return textField_BiasStep.getText();
+	}
 
+	public String getTextField_MaxBias() {
+		return textField_MaxBias.getText();
+	}
+
+	public String getTextField_MinBias() {
+		return textField_MinBias.getText();
+	}
+	
 	public void AddGenerateListner(ActionListener listenForGenerateButton)
 	{
 		btn_Generate.addActionListener(listenForGenerateButton);
@@ -861,6 +954,10 @@ public class UI extends JFrame{
 		this.textField_GridStep.setText(textField_GridStep);
 	}
 
+	public void setTextField_MinBias(String textField_MinBias) {
+		this.textField_MinBias.setText(textField_MinBias);
+	}
+	
 	public JTextField getTextField_s1y() {
 		return textField_s1y;
 	}

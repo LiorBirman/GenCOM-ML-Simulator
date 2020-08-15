@@ -26,6 +26,7 @@ public class Parameters
 	private double m_Range;
 	private double m_MaxBias;
 	private double m_BiasStep;
+	private double m_MinBias;
 	private int m_NLines;
 	private int m_N0CorrectMeas;
 	private int m_N1CorrectMeas;
@@ -51,6 +52,7 @@ public class Parameters
 		
 		this.m_MaxBias = Double.parseDouble((map.get("MaxBias")));
 		this.m_BiasStep = Double.parseDouble((map.get("BiasStep")));
+		this.m_MinBias = Double.parseDouble((map.get("MinBias")));
 		
 		this.m_Range = Double.parseDouble((map.get("Range")));
 		this.m_NLines = (int)Double.parseDouble((map.get("NLines")));
@@ -106,6 +108,7 @@ public class Parameters
 	}
 	public double GetMaxBias() {return m_MaxBias;}
 	public double GetBiasStep() {return m_BiasStep;}
+	public double GetMinBias() {return m_MinBias;}
 	
 	// Setters
 	public void SetRange(int Range) {this.m_Range = Range;}
@@ -125,4 +128,5 @@ public class Parameters
 	public void SetUncertainty3(double Uncertainty) {this.m_Uncertainty3 = Uncertainty;}
 	public void SetMaxBias(double MaxBias) {this.m_MaxBias = MaxBias;}
 	public void SetBiasStep(double BiasStep) {this.m_BiasStep = BiasStep;}
+	public void SetMinBias(double MinBias) {this.m_MinBias = MinBias;}
 }
